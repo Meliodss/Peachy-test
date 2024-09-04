@@ -1,4 +1,4 @@
-import Swiper, { Autoplay, Pagination } from "swiper";
+import Swiper, { Pagination } from "swiper";
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -40,13 +40,12 @@ const FeaturedProducts = {
     this.slider = new Swiper(this.sliderWrapper, {
       slidesPerView: 1,
       spaceBetween: 16,
-      autoplay: true,
       pagination: {
         el: ".swiper-pagination",
         type: "bullets",
         clickable: true,
       },
-      modules: [Autoplay, Pagination],
+      modules: [Pagination],
     });
   },
 
