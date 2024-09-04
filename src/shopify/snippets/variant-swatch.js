@@ -1,4 +1,4 @@
-class VariantSwatch extends HTMLElement {
+export default class VariantSwatch extends HTMLElement {
   constructor() {
     super();
     this._init();
