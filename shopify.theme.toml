@@ -1,4 +1,4 @@
 [environments.dev]
-store = ""
+store = "d9c2d0-bd.myshopify.com"
 path = "."
 theme-editor-sync = true

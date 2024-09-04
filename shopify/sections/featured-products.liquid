@@ -1,29 +1,83 @@
-<div
-  data-section-type="featured-products"
-  data-section-id="{{ section.id }}"
->
-  <!-- Slider main container -->
-  <div class="swiper">
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-      <!-- Slides -->
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-    </div>
-    <!-- If we need pagination -->
-    <div class="swiper-pagination"></div>
-  </div>
-</div>
+{%- if section.settings.product_list != blank and section.settings.product_list.count > 0 -%}
+  <div class="container pt-3.625 pb-10">
+    <div
+      data-section-type="featured-products"
+      data-section-id="{{ section.id }}"
+    >
+      {%- if section.settings.image != blank -%}
+        {%-
+          render 'image',
+          image: section.settings.image,
+          loading: 'lazy',
+          class: "absolute -z-10 object-cover object-center w-full left-0 top-0"
+        -%}
+      {%- endif -%}
 
-{% schema %}
+      {%- if section.settings.title != blank -%}
+        <h2 class="featured-products__title font-adorn-condensed-sans leading-none text-42 md:text-66 mb-3.875 md:mb-6 text-center relative z-0 block mx-auto">
+          <span class="featured-products__title--desktop hidden md:inline-block">{{- section.settings.title -}}</span>
+          {%- assign titleArr = section.settings.title | split: ' ' -%}
+          {%- assign lastWordIndex = titleArr.size | minus: '1' -%}
+          {%- assign num = 0 -%}
+          <div class="featured-products__title--mobile inline-block md:hidden">
+            <span>
+              {%- for word in titleArr %}
+                {%- if num != lastWordIndex %}
+                  {{ word }}
+
+                  {%- assign num = num | plus: '1' -%}
+                {% endif -%}
+              {% endfor -%}
+            </span>
+            <span class="font-effect">
+              <span>{{- titleArr[lastWordIndex] -}}</span>
+              <span>{{- titleArr[lastWordIndex] -}}</span>
+            </span>
+          </div>
+        </h2>
+      {%- endif -%}
+      <div class="swiper flex flex-col">
+        <div class="swiper-wrapper md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 ">
+          {%- for product in section.settings.product_list -%}
+            <div class="swiper-slide">
+              {%- render 'product-grid-item', product: product -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="swiper-pagination flex md:hidden justify-center mt-5 md:mt-0 relative py-1 md:py-0"></div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- schema -%}
   {
     "name": "Featured Products",
     "tag": "section",
+    "class": "relative",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Our best sellers"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "product_list",
+        "id": "product_list",
+        "label": "Products",
+        "limit": 8
+      }
+    ],
     "presets": [
       {
         "name": "Featured Products"
       }
     ]
   }
-{% endschema %}
+{%- endschema -%}

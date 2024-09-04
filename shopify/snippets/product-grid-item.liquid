@@ -1,27 +1,58 @@
-<form
-  action="/cart/add"
-  method="post"
-  data-cart-submit
->
-  <variant-swatch>
-    {% if product.variants.size > 1 %}
-      <select name="id">
-        {% for variant in product.variants %}
-          <option
-            value="{{ variant.id }}"
-          >
-            {{ variant.title }}
-          </option>
-        {% endfor %}
-      </select>
-    {% else %}
-      <input
-        type="hidden"
-        name="id"
-        value="{{ product.selected_or_first_available_variant.id }}"
-      >
-    {% endif %}
+<div class="product-card p-3.5 box-border">
+  {%- if product.featured_image != blank -%}
+    <a href="{{- product.url -}}" class="flex mb-5 flex-col">
+      {%-
+        render 'image',
+        image: product.featured_image,
+        loading: 'lazy',
+        class: "max-h-320 md:max-h-18.25 object-cover object-center rounded-lg w-full"
+      -%}
 
-    <button type="submit">add to cart</button>
-  </variant-swatch>
-</form>
+      <h3 class="mt-5 text-center font-adorn-condensed-sans text-30 leading-none max-w-11 mx-auto">{{- product.title -}}</h3>
+    </a>
+  {%- endif -%}
+
+  <form
+    action="/cart/add"
+    method="post"
+    data-cart-submit
+  >
+    <variant-swatch class="variant-swatch flex flex-col relative z-0">
+      <div class="custom-select relative pb-2 border-b z-0">
+        {% if product.variants.size > 1 %}
+          <span class="inline-block absolute right-0 top-0 z-0">
+            {%- render 'icons', icon: 'vertical-arrow' -%}
+          </span>
+          <select name="id" class="custom-select__wrapper relative cursor-pointer bg-transparent font-futura-pt text-18 leading-23 appearance-none w-full z-10">
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                data-price="{{ variant.price | money_with_currency }}"
+              >
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+          >
+        {% endif %}
+      </div>
+
+      <button type="submit" class="mt-6 hover:mt-4.5 default-button">
+        <div class="default-button__wrapper flex items-center justify-center">
+          <span class="product-card__price font-futura-pt text-14 leading-17.9 tracking-12">
+            {{- product.selected_or_first_available_variant.price | money_with_currency -}}
+          </span>
+          <span class="font-futura-pt text-14 leading-17.9 px-1">|</span>
+          <span class="font-futura-pt text-14 leading-17.9 tracking-12">
+            {{- 'action.add_to_cart' | t -}}
+          </span>
+        </div>
+      </button>
+    </variant-swatch>
+  </form>
+</div>

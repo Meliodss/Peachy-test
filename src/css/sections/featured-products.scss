@@ -1,2 +1,26 @@
 [data-section-type="featured-products"] {
+  .featured-products__title {
+    color: $dark;
+  }
+
+  .swiper-pagination {
+    .swiper-pagination-bullet {
+      background-color: $grey;
+      @apply w-2.5 h-2.5 opacity-100;
+
+      &-active {
+        background-color: $yellow;
+      }
+    }
+  }
+
+  .product-card {
+    background-color: $light-pink;
+    border-color: $pink;
+    @apply rounded-xl border-4;
+
+    .custom-select {
+      border-color: $pink;
+    }
+  }
 }

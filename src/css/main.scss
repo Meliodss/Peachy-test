@@ -4,9 +4,11 @@
 
 @import "tailwindcss/components";
 @layer components {
+  @import "@/css/sections/variables.scss";
   @import "@/css/snippets/site-logo.scss";
   @import "@/css/sections/header.scss";
   @import "@/css/sections/featured-products.scss";
+  @import "@/css/sections/components.scss";
 }
 
 @import "tailwindcss/utilities";

@@ -1,0 +1,45 @@
+.default-button {
+  color: $dark;
+  @apply relative flex w-full transition-all ease-in-out duration-300;
+
+  &__wrapper {
+    background-color: $yellow;
+    border-color: $dark;
+    width: 278px;
+    @apply w-full py-5 px-4 uppercase border-2 box-border rounded-sm font-medium font-futura-pt text-14 leading-17.9 max-h-49 flex items-center justify-center relative text-center z-0 transition-all ease-in-out duration-300;
+  }
+
+  &::after {
+    content: '';
+    background-color: $dark;
+    @apply absolute top-0 left-0 rounded-sm w-full h-full max-h-49 -z-10 transition-all ease-in-out duration-300;
+  }
+
+  &:hover {
+    .default-button__wrapper {
+      @apply mr-1.5 mb-1.5;
+    }
+
+    &::after {
+      @apply left-1.5 top-1.5 w-calc(100%/-/0.375rem);
+    }
+  }
+}
+
+.font-effect {
+  @apply relative inline-block;
+
+  span {
+    color: $dark;
+
+    &:first-of-type {
+      color: $white;
+
+      @apply absolute z-0;
+    }
+
+    &:last-of-type {
+      @apply relative -z-10 left-0.5 top-0.5;
+    }
+  }
+}
